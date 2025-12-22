@@ -9,7 +9,7 @@ then
     exit 1
 fi
 
-dnf list install git 
+dnf list installed git 
 
 if [ $? -ne 0 ]
 then 

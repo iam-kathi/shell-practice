@@ -35,18 +35,19 @@ FILES=$(find ${SOURCE_DIR} -name "*.log" -mtime +$DAYS)
 
 echo "Files: $FILES"
 
-if [ ! -z $FILES ] #true if FILES is empty, ! nakes it expression false
+if [ ! -z $FILES ] #-z is for empty, true if FILES is empty, ! makes it expression false
 then
     echo "Files are found"
     ZIP_FILE="$DEST_DIR/app-logs-$TIMESTAMP.zip"
     find ${SOURCE_DIR} -name "*.log" -mtime +$DAYS | zip "$ZIP_FILE" -@
 
     #check if zip file is successfully created or not
-    if [ -f $ZIP_FILE ]
+    if [ -f $ZIP_FILE ] #-d directory, -f file
     then
         echo "Successfully zippped files older than $DAYS"
+        # backup will be carried out by backup team we just send them to destination directory
         #remove the files after zipping
-        while IFS= read -r file #IFS,internal field seperatpor, empty it will ignore while space.-r is for not to ingore special charecters like /
+        while IFS= read -r file #IFS,internal field seperatpor, empty it will ignore white space. -r is for not to ingore special charecters like /
         do
             echo "Deleting file: $file"
             rm -rf $file
